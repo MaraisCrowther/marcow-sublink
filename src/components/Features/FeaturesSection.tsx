@@ -1,6 +1,8 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Shield, Zap, Users, BarChart, Lock, RefreshCw } from "lucide-react";
 
+// Force cache refresh
+
 const features = [
   {
     icon: Shield,
