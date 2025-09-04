@@ -17,20 +17,27 @@ All colors MUST be HSL.
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Marcrow IT Brand Colors */
+    --primary: 228 84% 32%;        /* #1e3a8a - Deep Blue */
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 213 16% 36%;       /* #374151 - Sophisticated Gray */  
+    --secondary-foreground: 0 0% 100%;
 
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 160 64% 39%;          /* #10b981 - Trust Green */
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --warning: 38 92% 50%;          /* #f59e0b - Warning Orange */
+    --warning-foreground: 0 0% 100%;
+
+    --success: 160 64% 39%;         /* #10b981 - Success Green */
+    --success-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;       /* #ef4444 - Error Red */
+    --destructive-foreground: 0 0% 100%;
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
@@ -65,20 +72,27 @@ All colors MUST be HSL.
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    /* Dark mode brand colors */
+    --primary: 228 84% 45%;         /* Lighter blue for dark mode */
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 213 16% 50%;       /* Lighter gray for dark mode */
+    --secondary-foreground: 0 0% 100%;
 
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 160 64% 50%;          /* Lighter green for dark mode */
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --warning: 38 92% 60%;          /* Lighter warning for dark mode */
+    --warning-foreground: 0 0% 0%;
+
+    --success: 160 64% 50%;         /* Lighter success for dark mode */
+    --success-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 70%;       /* Lighter error for dark mode */
+    --destructive-foreground: 0 0% 0%;
 
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
