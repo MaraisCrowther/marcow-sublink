@@ -2,11 +2,36 @@ import { Button } from "@/components/ui/button";
 import { Shield, Menu, X } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { AuthModal } from "@/components/Auth/AuthModal";
+import { useAuth } from "@/hooks/useAuth";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [authMode, setAuthMode] = useState<"signin" | "signup">("signin");
+  const { user, profile, loading, signOut } = useAuth();
+
+  const handleSignIn = () => {
+    setAuthMode("signin");
+    setAuthModalOpen(true);
+  };
+
+  const handleSignUp = () => {
+    setAuthMode("signup");
+    setAuthModalOpen(true);
+  };
+
+  const getInitials = () => {
+    if (profile?.first_name && profile?.last_name) {
+      return `${profile.first_name[0]}${profile.last_name[0]}`.toUpperCase();
+    }
+    return profile?.email?.[0]?.toUpperCase() || "U";
+  };
 
   return (
+    <>
     <header className="bg-background border-b border-border sticky top-0 z-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
@@ -33,10 +58,59 @@ export const Header = () => {
           </nav>
 
           {/* Auth Buttons */}
-          <div className="hidden md:flex items-center space-x-4">
-            <Button variant="ghost">Sign In</Button>
-            <Button>Get Started</Button>
-          </div>
+          {!loading && (
+            <div className="hidden md:flex items-center space-x-4">
+              {user ? (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+                      <Avatar className="h-8 w-8">
+                        <AvatarFallback className="text-xs">
+                          {getInitials()}
+                        </AvatarFallback>
+                      </Avatar>
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-56" align="end" forceMount>
+                    <div className="flex flex-col space-y-1 p-2">
+                      <p className="text-sm font-medium leading-none">
+                        {profile?.first_name && profile?.last_name 
+                          ? `${profile.first_name} ${profile.last_name}`
+                          : profile?.email
+                        }
+                      </p>
+                      <p className="text-xs leading-none text-muted-foreground">
+                        {profile?.email}
+                      </p>
+                      {profile?.is_admin && (
+                        <p className="text-xs leading-none text-primary font-medium">
+                          Administrator
+                        </p>
+                      )}
+                    </div>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>
+                      Profile Settings
+                    </DropdownMenuItem>
+                    {profile?.is_admin && (
+                      <DropdownMenuItem>
+                        Admin Dashboard
+                      </DropdownMenuItem>
+                    )}
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={signOut}>
+                      Sign Out
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              ) : (
+                <>
+                  <Button variant="ghost" onClick={handleSignIn}>Sign In</Button>
+                  <Button onClick={handleSignUp}>Get Started</Button>
+                </>
+              )}
+            </div>
+          )}
 
           {/* Mobile Menu Button */}
           <div className="md:hidden">
@@ -86,16 +160,46 @@ export const Header = () => {
               >
                 Contact
               </Link>
-              <div className="flex flex-col space-y-2 mt-4">
-                <Button variant="ghost" className="w-full">
-                  Sign In
-                </Button>
-                <Button className="w-full">Get Started</Button>
-              </div>
+              {!loading && (
+                <div className="flex flex-col space-y-2 mt-4">
+                  {user ? (
+                    <>
+                      <div className="px-3 py-2 text-sm">
+                        <p className="font-medium">
+                          {profile?.first_name && profile?.last_name 
+                            ? `${profile.first_name} ${profile.last_name}`
+                            : profile?.email
+                          }
+                        </p>
+                        {profile?.is_admin && (
+                          <p className="text-xs text-primary">Administrator</p>
+                        )}
+                      </div>
+                      <Button variant="ghost" className="w-full" onClick={signOut}>
+                        Sign Out
+                      </Button>
+                    </>
+                  ) : (
+                    <>
+                      <Button variant="ghost" className="w-full" onClick={handleSignIn}>
+                        Sign In
+                      </Button>
+                      <Button className="w-full" onClick={handleSignUp}>Get Started</Button>
+                    </>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         )}
       </div>
     </header>
+    
+    <AuthModal 
+      isOpen={authModalOpen} 
+      onClose={() => setAuthModalOpen(false)}
+      initialMode={authMode}
+    />
+    </>
   );
 };
